@@ -3,12 +3,11 @@
     <string name="play">Play</string>
     <string name="title">Gambling</string>
     <string name="continue_playing">Continue Playing</string>
-    <string name="ad">Alone cats in your area</string>
+    <string name="ad">Lonely cats in your area</string>
     <string name="menu">Menu</string>
     <string name="blackjack">Blackjack</string>
     <string name="title_logo">Title Logo</string>
     <string name="todo">TODO</string>
-    <string name="kostka_do_gry">Kostka do Gry</string>
     <string name="adcat">adcat</string>
     <string name="next_round">Next Round</string>
 </resources>
