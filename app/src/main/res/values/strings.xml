@@ -10,4 +10,5 @@
     <string name="todo">TODO</string>
     <string name="adcat">adcat</string>
     <string name="next_round">Next Round</string>
+    <string name="game_logo">Game Logo</string>
 </resources>
