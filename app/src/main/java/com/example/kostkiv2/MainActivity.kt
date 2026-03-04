@@ -10,6 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.setPadding
+import androidx.core.view.updatePadding
 import java.lang.Integer.parseInt
 import kotlin.random.Random
 
@@ -26,15 +28,38 @@ class MainActivity : AppCompatActivity() {
 
         val balanceText: TextView = findViewById(R.id.textBalance)
         val scoreText: TextView = findViewById(R.id.textScore)
-        dicesDraw = arrayOf(R.drawable.k1, R.drawable.k2, R.drawable.k3, R.drawable.k4, R.drawable.k5, R.drawable.k6)
         balanceText.text = getString(R.string.balance, balance)
         scoreText.text = getString(R.string.score, score)
+
+        dicesDraw = arrayOf(R.drawable.k1,
+            R.drawable.k2,
+            R.drawable.k3,
+            R.drawable.k4,
+            R.drawable.k5,
+            R.drawable.k6)
+
+        dices = arrayOf(findViewById(R.id.dice1),
+            findViewById(R.id.dice2),
+            findViewById(R.id.dice3),
+            findViewById(R.id.dice4),
+            findViewById(R.id.dice5))
+
+        for(dice in dices) {
+            dice.setOnLongClickListener {
+                    dice.updatePadding(toDp(10), 0 ,0, 0)
+                }
+        }
     }
 
     var balance: Int = 100
     var score: Int = 0
     var dicesDraw = arrayOfNulls<Int>(6) as Array<Int>
+    var dices = arrayOfNulls<ImageButton>(5) as Array<ImageButton>
+    val dp = resources.displayMetrics.density
 
+    fun toDp(dp: Int): Int {
+        return (dp.toFloat()*resources.displayMetrics.density.toFloat()+0.5f).toInt()
+    }
     fun rollDice(view: View) {
         val selDice: ImageButton = view as ImageButton
 
@@ -53,12 +78,6 @@ class MainActivity : AppCompatActivity() {
     fun rollDices(view: View) {
         val balanceText: TextView = findViewById(R.id.textBalance)
         val scoreText: TextView = findViewById(R.id.textScore)
-
-        val dices: Array<ImageButton> = arrayOf(findViewById(R.id.dice1),
-                                                findViewById(R.id.dice2),
-                                                findViewById(R.id.dice3),
-                                                findViewById(R.id.dice4),
-                                                findViewById(R.id.dice5))
 
         score = 0
         balance-=5

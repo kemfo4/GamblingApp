@@ -144,6 +144,7 @@
                     android:background="@drawable/kostka"
                     android:backgroundTint="#00000000"
                     android:contentDescription="@string/value"
+                    android:longClickable="true"
                     android:onClick="rollDice"
                     android:padding="12dp"
                     android:scaleType="centerInside"
