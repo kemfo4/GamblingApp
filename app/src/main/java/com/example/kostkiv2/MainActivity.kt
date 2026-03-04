@@ -43,19 +43,12 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.dice3),
             findViewById(R.id.dice4),
             findViewById(R.id.dice5))
-
-        for(dice in dices) {
-            dice.setOnLongClickListener {
-                    dice.updatePadding(toDp(10), 0 ,0, 0)
-                }
-        }
     }
 
     var balance: Int = 100
     var score: Int = 0
     var dicesDraw = arrayOfNulls<Int>(6) as Array<Int>
     var dices = arrayOfNulls<ImageButton>(5) as Array<ImageButton>
-    val dp = resources.displayMetrics.density
 
     fun toDp(dp: Int): Int {
         return (dp.toFloat()*resources.displayMetrics.density.toFloat()+0.5f).toInt()
