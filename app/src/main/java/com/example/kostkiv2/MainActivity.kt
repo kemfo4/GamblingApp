@@ -3,11 +3,13 @@
 package com.example.kostkiv2
 
 import android.os.Bundle
+import android.text.TextUtils.split
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         val scoreText: TextView = findViewById(R.id.textScore)
         balanceText.text = getString(R.string.balance, balance)
         scoreText.text = getString(R.string.score, score)
+        dicePadding = toDp(12)
 
         dicesDraw = arrayOf(R.drawable.k1,
             R.drawable.k2,
@@ -43,27 +46,47 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.dice3),
             findViewById(R.id.dice4),
             findViewById(R.id.dice5))
+
+        for(dice in dices) {
+            dice.setOnLongClickListener {
+                if(dice.contentDescription!="%d") {
+                    dice.setPadding(dicePadding + toDp(2))
+                    dice.setBackgroundResource(R.drawable.selected_dice)
+                }
+                true
+            }
+
+            dice.setOnClickListener {
+                if(dice.paddingStart != dicePadding)
+                {
+                    dice.setBackgroundResource(R.drawable.dices_bg)
+                    dice.setPadding(dicePadding)
+                } else rollDice(dice)
+                true
+            }
+        }
     }
 
     var balance: Int = 100
     var score: Int = 0
     var dicesDraw = arrayOfNulls<Int>(6) as Array<Int>
     var dices = arrayOfNulls<ImageButton>(5) as Array<ImageButton>
+    var dicePadding = 0
 
     fun toDp(dp: Int): Int {
-        return (dp.toFloat()*resources.displayMetrics.density.toFloat()+0.5f).toInt()
+        return (dp.toFloat()*resources.displayMetrics.density+0.5f).toInt()
     }
     fun rollDice(view: View) {
         val selDice: ImageButton = view as ImageButton
 
-        if((balance-2)>=0 && selDice.contentDescription.toString()!="%d" && selDice.contentDescription.toString()!="1") {
+        if((balance-2)>=0 && selDice.contentDescription.toString()!="%s" && selDice.contentDescription.toString()!="1") {
             val value = Random.nextInt(1, 6 + 1)
-            score -= parseInt(selDice.contentDescription.toString())
+            score -= parseInt(split(selDice.contentDescription.toString(), ",")[1])
 
             selDice.setImageResource(dicesDraw[value - 1])
             selDice.contentDescription = getString(R.string.value, value)
 
-            score+= parseInt(selDice.contentDescription.toString())/2
+            score+= parseInt(split(selDice.contentDescription.toString(), ",")[1])/2
         }
 
     }
